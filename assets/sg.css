@@ -1,0 +1,431 @@
+/* ---
+section: Visibility Utils
+title: Introduction
+order: -10
+---
+
+[![NPM version][npm-image]][npm-url]
+[![Dependency Status][daviddm-image]][daviddm-url]
+
+A collection of dynamically generated css visibility related utility classes.
+
+Class names follow the [Emmet](http://docs.emmet.io/cheat-sheet/) abbreviation
+syntax, with colons (':') replaced by two dashes (`--`) to follow BEM naming
+conventions.
+E.g., the `visibility: hidden` utility class name is `.u-v--h` and
+the `backface-visibility: visible` one is `.u-bfv--v`.
+In the same vein, the `opacity: 0.5` class will be `.u-o--0\.5` (It is automatically escaped).
+
+#### Available classes
+
+  - `.u-v--h` (visibility: hidden)
+  - `.u-v--v` (visibility: visible)
+  - `.u-v--inher` (visibility: inherit)
+  - `.u-c--init` (visibility: initial)
+  - `.u-v--un` (visibility: unset)
+
+  - `.u-bfv--h` (backface-visibility: hidden)
+  - `.u-bfv--v` (backface-visibility: visible)
+
+  - `.u-o--<level>` (opacity: <level>)
+
+Additionally, JigSass Visibility provides the following stateful helpers:
+  - `.u-is-hidden`: Hides elements visually and from screen readers.
+  - `.u-is-visually-hidden`: Hides elements visually but leaves them accesible for screen readers.
+  - `.u-is-visually-hidden.u-is-focusable`: Reveal focusable visually hidden elements on focus
+    (with keyboard navigation or js).
+
+#### Installation
+
+Using npm:
+
+```sh
+npm i -S jigsass-utils-visibility
+```
+
+#### Usage
+Import JigSass Utils Visibility into your main scss file near its very end, together with all
+other utilities (utilities should always be the last to be imported).
+
+```scss
+@import 'path/to/jigsass-utils-visibility/scss/index';
+```
+
+Like all other JigSass Utils, JigSass Visibility does not automatically generate any CSS
+when imported. You would need to explicitly indicate that each individual visibility
+class should actually be generated in each component or object it is used in
+(clarification: This will include style declarations inside `.foo` and .`bar`):
+
+```scss
+// _c.foo.scss
+.foo {
+  @include jigsass-util(u-v, $modifier: h); // <-- visibility: hidden
+
+  ...
+}
+```
+
+```scss
+// _c.bar.scss
+.bar {
+  @include jigsass-util(u-bfv, $modifier: h);  // <-- backface-visibility: hidden
+  @include jigsass-util(
+    u-bfv,
+    $modifier: visible,
+    $from: large
+  ); // <-- backface-visibility: visible from large bp an on.
+
+  ...
+}
+```
+
+```scss
+// _c.baz.scss
+.baz {
+  @include jigsass-util(u-is-hidden, $from: medium); // <-- display: none from medium bp an on.
+
+  ...
+}
+```
+
+Doing so helps us a great deal with portability, as no matter where we import component or object
+partials, the correct utility classes will be generated. Think of it as a poor man's dependency
+management.
+
+Developer communication is also assisted by including "dependencies" wherever they are required,
+as anyone going through a partial, can easily understand how it should be marked up with just a
+glance.
+
+As far as bloat goes, just don't worry about it - the actual styles will only be generated once,
+at the location in the cascade where the Jigsass Visibility partial was imported into the main file.
+
+
+JigSass Visibility classes are responsive-enabled, using [JigSass MQ](https://txhawks.github.io/jigsass-tools-mq/)
+and the breakpoints defined in the [$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints) variable.
+
+Based on the breakpoint arguments passed to `jigsass-util` when including a visibility class, responsive
+modifiers are generated according to the following logic:
+
+```scss
+.u-v--<modifier>[-[-from-<breakpoint-name>][-until-<breakpoint-name>][-misc-<breakpoint-name>]]
+```
+
+So, assuming the `medium`, `large` and `landscape` breakpoints are defined in `$jigsass-breakpoints`
+as `600px`, `1024px` and `(orientation: landscape)` respectively,
+
+```scss
+@include jigsass-util(u-v, $modifier: h);
+```
+will generate the `.u-v--h` class, which is not limited to any media-query.
+
+```scss
+@include jigsass-util(u-v, $modifier: h, $until: medium);
+```
+
+will generate the `.u-v--h--until-medium` class, which will be in effect at
+`(max-width: 37.49em)` and will override styles in the default class until that point.
+
+```scss
+@include jigsass-util(u-v, $modifier: h, $from: large, $misc: landscape);
+```
+
+will generate the `.u-v--h--from-large-when-landscape` class, which will go into
+effect at `(min-width: 64em) and (orientation: landscape)` and will override styles in the default
+class under these  conditions.
+
+
+**License:** MIT
+
+
+
+[npm-image]: https://badge.fury.io/js/jigsass-utils-visibility.svg
+[npm-url]: https://npmjs.org/package/jigsass-utils-visibility
+
+[daviddm-image]: https://david-dm.org/TxHawks/jigsass-utils-visibility.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/TxHawks/jigsass-utils-visibility
+*/
+.u-v--v {
+  visibility: visible;
+  /* ---
+section: Visibility Utils
+title: u-v--v (visible)
+order: 1
+---
+A util to modify an element's `visibility` property to
+`visible`.
+
+#### Include with:
+
+```scss
+@include jigsass-util(u-v, $modifier: visible[, $from, $until, $misc]);
+```
+
+#### Example
+
+```example:html
+<div class='fpo u-v--v'>
+  This div's visibility is set to: <em>visible</em>.
+</div>
+```
+*/
+}
+
+.u-v--h {
+  visibility: hidden;
+  /* ---
+section: Visibility Utils
+title: u-v--h (hidden)
+order: 2
+---
+A util to modify an element's `visibility` property to
+`hidden`.
+
+#### Include with:
+
+```scss
+@include jigsass-util(u-v, $modifier: hidden[, $from, $until, $misc]);
+```
+
+#### Example
+
+```example:html
+<div class='fpo u-v--h'>
+  This div's visibility is set to: <em>hidden</em>.
+</div>
+```
+*/
+}
+
+.u-bfv--v {
+  bacface-visibility: visible;
+  /* ---
+section: Visibility Utils
+title: u-bfv--v (visible)
+order: 3 + 100
+---
+A util to modify an element's `backface-visibility` property to
+`visible`.
+
+#### Include with:
+
+```scss
+@include jigsass-util(u-bfv, $modifier: visible[, $from, $until, $misc]);
+```
+
+#### Example
+
+```html
+<div class='u-bfv--v'>
+  A div with backface-visibility set to visible.
+</div>
+```
+*/
+}
+
+.u-bfv--h {
+  bacface-visibility: hidden;
+  /* ---
+section: Visibility Utils
+title: u-bfv--h (hidden)
+order: 4 + 100
+---
+A util to modify an element's `backface-visibility` property to
+`hidden`.
+
+#### Include with:
+
+```scss
+@include jigsass-util(u-bfv, $modifier: hidden[, $from, $until, $misc]);
+```
+
+#### Example
+
+```html
+<div class='u-bfv--h'>
+  A div with backface-visibility set to hidden.
+</div>
+```
+*/
+}
+
+.u-o--0 {
+  opacity: 0;
+  /* ---
+section: Visibility Utils
+title: u-o--0
+order: 5 + 200
+---
+A util to modify an element's `opacity` property to `0`.
+
+#### Include with:
+
+```scss
+@include jigsass-util(u-o, $modifier: 0[, $from, $until, $misc]);
+```
+
+#### Example
+
+```example:html
+<div class='fpo u-o--0'>
+  A div with opacity set to 0.
+</div>
+```
+*/
+}
+
+.u-o--0\.5 {
+  opacity: 0.5;
+  /* ---
+section: Visibility Utils
+title: u-o--0.5
+order: 6 + 200
+---
+A util to modify an element's `opacity` property to `0.5`.
+
+#### Include with:
+
+```scss
+@include jigsass-util(u-o, $modifier: 0.5[, $from, $until, $misc]);
+```
+
+#### Example
+
+```example:html
+<div class='fpo u-o--0.5'>
+  A div with opacity set to 0.5.
+</div>
+```
+*/
+}
+
+.u-o--1 {
+  opacity: 1;
+  /* ---
+section: Visibility Utils
+title: u-o--1
+order: 7 + 200
+---
+A util to modify an element's `opacity` property to `1`.
+
+#### Include with:
+
+```scss
+@include jigsass-util(u-o, $modifier: 1[, $from, $until, $misc]);
+```
+
+#### Example
+
+```example:html
+<div class='fpo u-o--1'>
+  A div with opacity set to 1.
+</div>
+```
+*/
+}
+
+.u-is-hidden {
+  display: none;
+  /* ---
+section: Visibility Utils
+title: u-is-hidden
+order: 8 + 300
+---
+A util to hide elements visually and from screen readers.
+
+#### Include with:
+
+```scss
+@include jigsass-util(u-is-hidden [, $from, $until, $misc]);
+```
+
+#### Example
+
+```example:html
+<div class='fpo u-is-hidden>
+  This div is hidden both visually and from screen readers.
+</div>
+```
+*/
+}
+
+.u-is-visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  /* ---
+section: Visibility Utils
+title: u-is-visually-hidden
+order: 9 + 300
+---
+A util to hide elements visually but leaves them accesible for screen readers.
+
+Optionally reveal focusable visually hidden elements on focus (with keyboard navigation or js),
+by attaching the `u-is-focusable` class to them.
+
+#### Include with:
+
+```scss
+@include jigsass-util(u-is-visually-hidden [, $from, $until, $misc]);
+```
+
+#### Example
+
+```example:html
+<p>Tab-cycle inside the demo iFrame to reveal the focusable visually hidden element</p>
+<div tabindex='0' class='fpo [ u-is-visually-hidden u-is-focusable ]'>
+  This div is hidden visually but is available to screen readers.
+  It is revealed when focusd
+</div>
+```
+*/
+}
+
+.u-is-visually-hidden.u-is-focusable:active, .u-is-visually-hidden.u-is-focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+
+html {
+  font-size: 37.5%;
+}
+
+body {
+  font-size: 2.6666666667em;
+  line-height: 4rem;
+}
+
+html {
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0 !important;
+}
+
+.fpo {
+  background-color: #09a5d9;
+  color: #fff;
+  padding: 1rem;
+}
+
+figure,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
