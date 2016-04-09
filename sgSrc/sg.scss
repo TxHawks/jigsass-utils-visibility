@@ -1,0 +1,87 @@
+// *************************************
+//
+// # jigsass-utils-visibility style guide generator
+// -> It is a best practice for JigSass modules to
+//    not automatically generate css and documentation
+//    on `@import`. Please use this file to enable css
+//    (and comments) generation.
+//
+//    Files in `sgSrc/assets` will be available
+//    for use in the style guide
+//
+// *************************************
+
+
+@charset 'UTF-8';
+
+// --------------------
+// Dependencies
+// --------------------
+@import '../node_modules/jigsass-tools-maps/scss/index';
+@import '../node_modules/jigsass-tools-mq/scss/index';
+@import '../node_modules/jigsass-tools-typography/scss/index';
+@import '../node_modules/jigsass-tools-strings/scss/index';
+@import '../node_modules/jigsass-tools-bidi/scss/index';
+@import '../node_modules/jigsass-tools-selectors/scss/index';
+
+
+
+
+
+// --------------------
+// Styles
+// --------------------
+
+
+@include jigsass-util(u-v, $modifier: v);
+@include jigsass-util(u-v, $modifier: h);
+
+@include jigsass-util(u-bfv, $modifier: v);
+@include jigsass-util(u-bfv, $modifier: h);
+
+@include jigsass-util(u-o, $modifier: 0);
+@include jigsass-util(u-o, $modifier: 0.5);
+@include jigsass-util(u-o, $modifier: 1);
+
+@include jigsass-util(u-is-hidden);
+@include jigsass-util(u-is-visually-hidden);
+
+
+@import 'index.scss';
+
+
+
+// Demo Styles
+// --------------------
+// --------------------
+
+$jigsass-mdcss-brand-color: #09a5d9;
+@include jigsass-set-baseline;
+
+html {
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0 !important;
+}
+
+.fpo {
+   background-color: $jigsass-mdcss-brand-color;
+   color: #fff;
+   padding: 1rem;
+}
+
+figure,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+

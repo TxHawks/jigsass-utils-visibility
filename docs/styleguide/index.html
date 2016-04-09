@@ -1,0 +1,363 @@
+<!doctype html>
+<title>jigsass-utils-visibility</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="style.css?05" rel="stylesheet">
+<link href="jigsass-logo.png" rel="shortcut icon">
+<script type="text/javascript">WebFontConfig={google:{families:["Roboto:400,100,300,500:latin"]}},function(){var e=document.createElement("script");e.src="https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js",e.type="text/javascript",e.async="true";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}();</script>
+<script>examples={"base":"","target":"_self","css":["assets/sg.css"],"js":[],"bodyjs":[],"htmlcss":"background:none;border:0;clip:auto;display:block;height:auto;margin:0;padding:0;position:static;width:auto","bodycss":"background:none;border:0;clip:auto;display:block;height:auto;margin:0;padding:0;position:static;width:auto"};</script>
+
+<header>
+	<nav>
+		<img src="jigsass-logo.png" alt="jigsass-utils-visibility">
+		
+	<ul>
+		
+				<li>
+					<a href="#visibility-utils"><span>Visibility Utils</span></a>
+					
+	<ul>
+		
+				<li>
+					<a href="#introduction"><span>Introduction</span></a>
+					
+				</li>
+				
+				<li>
+					<a href="#u-v--v-visible"><span>u-v--v (visible)</span></a>
+					
+				</li>
+				
+				<li>
+					<a href="#u-v--h-hidden"><span>u-v--h (hidden)</span></a>
+					
+				</li>
+				
+				<li>
+					<a href="#u-bfv--v-visible"><span>u-bfv--v (visible)</span></a>
+					
+				</li>
+				
+				<li>
+					<a href="#u-bfv--h-hidden"><span>u-bfv--h (hidden)</span></a>
+					
+				</li>
+				
+				<li>
+					<a href="#u-o--0"><span>u-o--0</span></a>
+					
+				</li>
+				
+				<li>
+					<a href="#u-o--05"><span>u-o--0.5</span></a>
+					
+				</li>
+				
+				<li>
+					<a href="#u-o--1"><span>u-o--1</span></a>
+					
+				</li>
+				
+				<li>
+					<a href="#u-is-hidden"><span>u-is-hidden</span></a>
+					
+				</li>
+				
+				<li>
+					<a href="#u-is-visually-hidden"><span>u-is-visually-hidden</span></a>
+					
+				</li>
+				
+	</ul>
+	
+				</li>
+				
+	</ul>
+	
+	</nav>
+</header>
+
+<main>
+	
+		<section id="visibility-utils">
+			<h2>Visibility Utils</h2>
+			<div>
+				
+				
+		<section id="introduction">
+			<h3>Introduction</h3>
+			<div>
+				<p><a href="https://npmjs.org/package/jigsass-utils-visibility"><img src="https://badge.fury.io/js/jigsass-utils-visibility.svg" alt="NPM version"></a>
+<a href="https://david-dm.org/TxHawks/jigsass-utils-visibility"><img src="https://david-dm.org/TxHawks/jigsass-utils-visibility.svg?theme=shields.io" alt="Dependency Status"></a></p>
+<p>A collection of dynamically generated css visibility related utility classes.</p>
+<p>Class names follow the <a href="http://docs.emmet.io/cheat-sheet/">Emmet</a> abbreviation
+syntax, with colons (&#39;:&#39;) replaced by two dashes (<code>--</code>) to follow BEM naming
+conventions.
+E.g., the <code>visibility: hidden</code> utility class name is <code>.u-v--h</code> and
+the <code>backface-visibility: visible</code> one is <code>.u-bfv--v</code>.
+In the same vein, the <code>opacity: 0.5</code> class will be <code>.u-o--0\.5</code> (It is automatically escaped).</p>
+<h4 id="available-classes">Available classes</h4>
+<ul>
+<li><code>.u-v--h</code> (visibility: hidden)</li>
+<li><code>.u-v--v</code> (visibility: visible)</li>
+<li><code>.u-v--inher</code> (visibility: inherit)</li>
+<li><code>.u-c--init</code> (visibility: initial)</li>
+<li><p><code>.u-v--un</code> (visibility: unset)</p>
+</li>
+<li><p><code>.u-bfv--h</code> (backface-visibility: hidden)</p>
+</li>
+<li><p><code>.u-bfv--v</code> (backface-visibility: visible)</p>
+</li>
+<li><p><code>.u-o--&lt;level&gt;</code> (opacity: <level>)</p>
+</li>
+</ul>
+<p>Additionally, JigSass Visibility provides the following stateful helpers:</p>
+<ul>
+<li><code>.u-is-hidden</code>: Hides elements visually and from screen readers.</li>
+<li><code>.u-is-visually-hidden</code>: Hides elements visually but leaves them accesible for screen readers.</li>
+<li><code>.u-is-visually-hidden.u-is-focusable</code>: Reveal focusable visually hidden elements on focus
+(with keyboard navigation or js).</li>
+</ul>
+<h4 id="installation">Installation</h4>
+<p>Using npm:</p>
+<pre><code class="lang-sh">npm i -S jigsass-utils-visibility
+</code></pre>
+<h4 id="usage">Usage</h4>
+<p>Import JigSass Utils Visibility into your main scss file near its very end, together with all
+other utilities (utilities should always be the last to be imported).</p>
+<pre><code class="lang-scss">@import &#39;path/to/jigsass-utils-visibility/scss/index&#39;;
+</code></pre>
+<p>Like all other JigSass Utils, JigSass Visibility does not automatically generate any CSS
+when imported. You would need to explicitly indicate that each individual visibility
+class should actually be generated in each component or object it is used in
+(clarification: This will include style declarations inside <code>.foo</code> and .<code>bar</code>):</p>
+<pre><code class="lang-scss">// _c.foo.scss
+.foo {
+  @include jigsass-util(u-v, $modifier: h); // &lt;-- visibility: hidden
+
+  ...
+}
+</code></pre>
+<pre><code class="lang-scss">// _c.bar.scss
+.bar {
+  @include jigsass-util(u-bfv, $modifier: h);  // &lt;-- backface-visibility: hidden
+  @include jigsass-util(
+    u-bfv,
+    $modifier: visible,
+    $from: large
+  ); // &lt;-- backface-visibility: visible from large bp an on.
+
+  ...
+}
+</code></pre>
+<pre><code class="lang-scss">// _c.baz.scss
+.baz {
+  @include jigsass-util(u-is-hidden, $from: medium); // &lt;-- display: none from medium bp an on.
+
+  ...
+}
+</code></pre>
+<p>Doing so helps us a great deal with portability, as no matter where we import component or object
+partials, the correct utility classes will be generated. Think of it as a poor man&#39;s dependency
+management.</p>
+<p>Developer communication is also assisted by including &quot;dependencies&quot; wherever they are required,
+as anyone going through a partial, can easily understand how it should be marked up with just a
+glance.</p>
+<p>As far as bloat goes, just don&#39;t worry about it - the actual styles will only be generated once,
+at the location in the cascade where the Jigsass Visibility partial was imported into the main file.</p>
+<p>JigSass Visibility classes are responsive-enabled, using <a href="https://txhawks.github.io/jigsass-tools-mq/">JigSass MQ</a>
+and the breakpoints defined in the <a href="https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints">$jigsass-breakpoints</a> variable.</p>
+<p>Based on the breakpoint arguments passed to <code>jigsass-util</code> when including a visibility class, responsive
+modifiers are generated according to the following logic:</p>
+<pre><code class="lang-scss">.u-v--&lt;modifier&gt;[-[-from-&lt;breakpoint-name&gt;][-until-&lt;breakpoint-name&gt;][-misc-&lt;breakpoint-name&gt;]]
+</code></pre>
+<p>So, assuming the <code>medium</code>, <code>large</code> and <code>landscape</code> breakpoints are defined in <code>$jigsass-breakpoints</code>
+as <code>600px</code>, <code>1024px</code> and <code>(orientation: landscape)</code> respectively,</p>
+<pre><code class="lang-scss">@include jigsass-util(u-v, $modifier: h);
+</code></pre>
+<p>will generate the <code>.u-v--h</code> class, which is not limited to any media-query.</p>
+<pre><code class="lang-scss">@include jigsass-util(u-v, $modifier: h, $until: medium);
+</code></pre>
+<p>will generate the <code>.u-v--h--until-medium</code> class, which will be in effect at
+<code>(max-width: 37.49em)</code> and will override styles in the default class until that point.</p>
+<pre><code class="lang-scss">@include jigsass-util(u-v, $modifier: h, $from: large, $misc: landscape);
+</code></pre>
+<p>will generate the <code>.u-v--h--from-large-when-landscape</code> class, which will go into
+effect at <code>(min-width: 64em) and (orientation: landscape)</code> and will override styles in the default
+class under these  conditions.</p>
+<p><strong>License:</strong> MIT</p>
+
+				
+			</div>
+		</section>
+		
+		<section id="u-v--v-visible">
+			<h3>u-v--v (visible)</h3>
+			<div>
+				<p>A util to modify an element&#39;s <code>visibility</code> property to
+<code>visible</code>.</p>
+<h4 id="include-with-">Include with:</h4>
+<pre><code class="lang-scss">@include jigsass-util(u-v, $modifier: visible[, $from, $until, $misc]);
+</code></pre>
+<h4 id="example">Example</h4>
+<pre><code class="lang-example:html">&lt;div class=&#39;fpo u-v--v&#39;&gt;
+  This div&#39;s visibility is set to: &lt;em&gt;visible&lt;/em&gt;.
+&lt;/div&gt;
+</code></pre>
+
+				
+			</div>
+		</section>
+		
+		<section id="u-v--h-hidden">
+			<h3>u-v--h (hidden)</h3>
+			<div>
+				<p>A util to modify an element&#39;s <code>visibility</code> property to
+<code>hidden</code>.</p>
+<h4 id="include-with-">Include with:</h4>
+<pre><code class="lang-scss">@include jigsass-util(u-v, $modifier: hidden[, $from, $until, $misc]);
+</code></pre>
+<h4 id="example">Example</h4>
+<pre><code class="lang-example:html">&lt;div class=&#39;fpo u-v--h&#39;&gt;
+  This div&#39;s visibility is set to: &lt;em&gt;hidden&lt;/em&gt;.
+&lt;/div&gt;
+</code></pre>
+
+				
+			</div>
+		</section>
+		
+		<section id="u-bfv--v-visible">
+			<h3>u-bfv--v (visible)</h3>
+			<div>
+				<p>A util to modify an element&#39;s <code>backface-visibility</code> property to
+<code>visible</code>.</p>
+<h4 id="include-with-">Include with:</h4>
+<pre><code class="lang-scss">@include jigsass-util(u-bfv, $modifier: visible[, $from, $until, $misc]);
+</code></pre>
+<h4 id="example">Example</h4>
+<pre><code class="lang-html">&lt;div class=&#39;u-bfv--v&#39;&gt;
+  A div with backface-visibility set to visible.
+&lt;/div&gt;
+</code></pre>
+
+				
+			</div>
+		</section>
+		
+		<section id="u-bfv--h-hidden">
+			<h3>u-bfv--h (hidden)</h3>
+			<div>
+				<p>A util to modify an element&#39;s <code>backface-visibility</code> property to
+<code>hidden</code>.</p>
+<h4 id="include-with-">Include with:</h4>
+<pre><code class="lang-scss">@include jigsass-util(u-bfv, $modifier: hidden[, $from, $until, $misc]);
+</code></pre>
+<h4 id="example">Example</h4>
+<pre><code class="lang-html">&lt;div class=&#39;u-bfv--h&#39;&gt;
+  A div with backface-visibility set to hidden.
+&lt;/div&gt;
+</code></pre>
+
+				
+			</div>
+		</section>
+		
+		<section id="u-o--0">
+			<h3>u-o--0</h3>
+			<div>
+				<p>A util to modify an element&#39;s <code>opacity</code> property to <code>0</code>.</p>
+<h4 id="include-with-">Include with:</h4>
+<pre><code class="lang-scss">@include jigsass-util(u-o, $modifier: 0[, $from, $until, $misc]);
+</code></pre>
+<h4 id="example">Example</h4>
+<pre><code class="lang-example:html">&lt;div class=&#39;fpo u-o--0&#39;&gt;
+  A div with opacity set to 0.
+&lt;/div&gt;
+</code></pre>
+
+				
+			</div>
+		</section>
+		
+		<section id="u-o--05">
+			<h3>u-o--0.5</h3>
+			<div>
+				<p>A util to modify an element&#39;s <code>opacity</code> property to <code>0.5</code>.</p>
+<h4 id="include-with-">Include with:</h4>
+<pre><code class="lang-scss">@include jigsass-util(u-o, $modifier: 0.5[, $from, $until, $misc]);
+</code></pre>
+<h4 id="example">Example</h4>
+<pre><code class="lang-example:html">&lt;div class=&#39;fpo u-o--0.5&#39;&gt;
+  A div with opacity set to 0.5.
+&lt;/div&gt;
+</code></pre>
+
+				
+			</div>
+		</section>
+		
+		<section id="u-o--1">
+			<h3>u-o--1</h3>
+			<div>
+				<p>A util to modify an element&#39;s <code>opacity</code> property to <code>1</code>.</p>
+<h4 id="include-with-">Include with:</h4>
+<pre><code class="lang-scss">@include jigsass-util(u-o, $modifier: 1[, $from, $until, $misc]);
+</code></pre>
+<h4 id="example">Example</h4>
+<pre><code class="lang-example:html">&lt;div class=&#39;fpo u-o--1&#39;&gt;
+  A div with opacity set to 1.
+&lt;/div&gt;
+</code></pre>
+
+				
+			</div>
+		</section>
+		
+		<section id="u-is-hidden">
+			<h3>u-is-hidden</h3>
+			<div>
+				<p>A util to hide elements visually and from screen readers.</p>
+<h4 id="include-with-">Include with:</h4>
+<pre><code class="lang-scss">@include jigsass-util(u-is-hidden [, $from, $until, $misc]);
+</code></pre>
+<h4 id="example">Example</h4>
+<pre><code class="lang-example:html">&lt;div class=&#39;fpo u-is-hidden&gt;
+  This div is hidden both visually and from screen readers.
+&lt;/div&gt;
+</code></pre>
+
+				
+			</div>
+		</section>
+		
+		<section id="u-is-visually-hidden">
+			<h3>u-is-visually-hidden</h3>
+			<div>
+				<p>A util to hide elements visually but leaves them accesible for screen readers.</p>
+<p>Optionally reveal focusable visually hidden elements on focus (with keyboard navigation or js),
+by attaching the <code>u-is-focusable</code> class to them.</p>
+<h4 id="include-with-">Include with:</h4>
+<pre><code class="lang-scss">@include jigsass-util(u-is-visually-hidden [, $from, $until, $misc]);
+</code></pre>
+<h4 id="example">Example</h4>
+<pre><code class="lang-example:html">&lt;p&gt;Tab-cycle inside the demo iFrame to reveal the focusable visually hidden element&lt;/p&gt;
+&lt;div tabindex=&#39;0&#39; class=&#39;fpo [ u-is-visually-hidden u-is-focusable ]&#39;&gt;
+  This div is hidden visually but is available to screen readers.
+  It is revealed when focusd
+&lt;/div&gt;
+</code></pre>
+
+				
+			</div>
+		</section>
+		
+			</div>
+		</section>
+		
+	<footer>Last modified Sunday, 10 April 2016 14:54</footer>
+</main>
+<script src="prism.js"></script>
+<script src="examples.js"></script>
+<script src="script.js"></script>
+
