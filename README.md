@@ -8,14 +8,18 @@ syntax, with colons (':') replaced by two dashes (`--`) to follow BEM naming
 conventions.
 E.g., the `visibility: hidden` utility class name is `.u-v--h` and
 the `backface-visibility: visible` one is `.u-bfv--v`.
+In the same vein, the `opacity: 0.5` class will be `.u-o--0\.5` (It is automatically escaped).
+
 
 ## Available classes
 
   - `.u-v--h` (visibility: hidden)
   - `.u-v--v` (visibility: visible)
   - `.u-v--inher` (visibility: inherit)
-  - `.u-c--init` (visibility: initial)
+  - `.u-c--init` (visibility: initial) 
   - `.u-v--un` (visibility: unset)
+
+  - `.u-o--<level>` (visibility: <level>)
 
   - `.u-bfv--h` (backface-visibility: hidden)
   - `.u-bfv--v` (backface-visibility: visible)
