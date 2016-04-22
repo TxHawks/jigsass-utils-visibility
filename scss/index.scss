@@ -15,9 +15,10 @@
 // Dependencies
 // -------------------------------------
 
-// @if (check if dependency was imported) {
-//   @error '`jigsass-utils-visibility` has a dependency on `****`. Please import it.'
-// }
+@if (not mixin-exists(jigsass-define-util)) {
+  @error '`jigsass-utils-visibility` has a dependency on `jigsass-tools-selectors`. ' +
+    'Please import it before this file.';
+}
 
 
 
